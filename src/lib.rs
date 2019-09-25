@@ -7,6 +7,8 @@
 #[macro_use]
 extern crate shrinkwraprs;
 
+pub mod entries;
+
 mod dynamic_resize;
 mod keybindings;
 mod uuid_entry;
