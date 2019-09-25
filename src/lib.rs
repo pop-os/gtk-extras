@@ -7,7 +7,8 @@
 #[macro_use]
 extern crate shrinkwraprs;
 
+mod dynamic_resize;
 mod keybindings;
 mod uuid_entry;
 
-pub use self::uuid_entry::UuidEntry;
+pub use self::{dynamic_resize::DynamicResize, uuid_entry::UuidEntry};
