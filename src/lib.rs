@@ -4,4 +4,10 @@
 //!
 //! [Contributions welcome]()!
 
+#[macro_use]
+extern crate shrinkwraprs;
+
 mod keybindings;
+mod uuid_entry;
+
+pub use self::uuid_entry::UuidEntry;
