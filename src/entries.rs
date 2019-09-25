@@ -2,6 +2,9 @@ use gtk::prelude::*;
 use itertools::Itertools;
 use std::rc::Rc;
 
+/// Convenience method for `entry.get_text_length() == 0`.
+pub fn is_empty(entry: &gtk::Entry) -> bool { entry.get_text_length() == 0 }
+
 /// Links multiple entries by triggering a focus grab on an activation.
 ///
 /// The last entry will activate the `last` closure.

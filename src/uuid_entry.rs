@@ -65,7 +65,7 @@ impl UuidEntry {
 
         entry.connect_changed(move |entry| {
             // Ignore the change if the change was to set the entry to an empty string.
-            if entry.get_text().map_or(true, |text| text.as_str().is_empty()) {
+            if crate::entries::is_empty(entry) {
                 return;
             }
 
