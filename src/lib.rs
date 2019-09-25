@@ -8,6 +8,7 @@
 extern crate shrinkwraprs;
 
 pub mod entries;
+pub mod widgets;
 
 mod dynamic_resize;
 mod keybindings;
