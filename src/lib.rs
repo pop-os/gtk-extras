@@ -5,6 +5,9 @@
 //! [Contributions welcome]()!
 
 #[macro_use]
+extern crate cascade;
+
+#[macro_use]
 extern crate shrinkwraprs;
 
 pub mod entries;
@@ -12,6 +15,11 @@ pub mod widgets;
 
 mod dynamic_resize;
 mod keybindings;
+mod revealing_button;
 mod uuid_entry;
 
-pub use self::{dynamic_resize::DynamicResize, uuid_entry::UuidEntry};
+pub use cascade::cascade;
+
+pub use self::{
+    dynamic_resize::DynamicResize, revealing_button::RevealingButton, uuid_entry::UuidEntry,
+};
