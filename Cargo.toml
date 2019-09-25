@@ -1,0 +1,7 @@
+[package]
+name = "gtk-extras"
+version = "0.1.0"
+authors = ["Michael Aaron Murphy <mmstick@pm.me>"]
+edition = "2018"
+
+[dependencies]
