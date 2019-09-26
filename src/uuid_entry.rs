@@ -1,3 +1,4 @@
+use crate::entries::EntriesExt;
 use gtk::prelude::*;
 use std::{cell::RefCell, rc::Rc};
 use uuid::Uuid;
@@ -65,7 +66,7 @@ impl UuidEntry {
 
         entry.connect_changed(move |entry| {
             // Ignore the change if the change was to set the entry to an empty string.
-            if crate::entries::is_empty(entry) {
+            if entry.is_empty() {
                 return;
             }
 

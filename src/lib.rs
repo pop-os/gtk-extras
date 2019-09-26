@@ -21,5 +21,6 @@ mod uuid_entry;
 pub use cascade::cascade;
 
 pub use self::{
-    dynamic_resize::DynamicResize, revealing_button::RevealingButton, uuid_entry::UuidEntry,
+    dynamic_resize::DynamicResize, entries::EntriesExt, revealing_button::RevealingButton,
+    uuid_entry::UuidEntry,
 };
