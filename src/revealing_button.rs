@@ -8,6 +8,7 @@ use gtk::prelude::*;
 pub struct RevealingButton {
     #[shrinkwrap(main_field)]
     container: gtk::Container,
+    dropdown_image: gtk::Image,
 
     pub event_box: gtk::EventBox,
     pub revealer:  gtk::Revealer,
@@ -59,7 +60,12 @@ impl RevealingButton {
             ..add(&revealer);
         };
 
-        Self { container: container.upcast::<gtk::Container>(), event_box, revealer }
+        Self {
+            container: container.upcast::<gtk::Container>(),
+            dropdown_image,
+            event_box,
+            revealer,
+        }
     }
 
     /// Activates when the widget's container is clicked.
