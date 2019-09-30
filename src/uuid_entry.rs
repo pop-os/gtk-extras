@@ -71,6 +71,7 @@ impl UuidEntry {
             }
 
             let entry = entry.clone();
+            let source_ = source.clone();
 
             let mut source = source.borrow_mut();
             if let Some(source) = source.take() {
@@ -84,6 +85,7 @@ impl UuidEntry {
                     }
                 }
 
+                *source_.borrow_mut() = None;
                 gtk::Continue(false)
             }));
         });
