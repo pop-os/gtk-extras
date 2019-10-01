@@ -1,8 +1,10 @@
+mod image_selection;
 mod revealing_button;
 mod uuid_entry;
 mod variant_toggler;
 
 pub use self::{
+    image_selection::{ImageSelection, SelectionVariant},
     revealing_button::RevealingButton,
     uuid_entry::UuidEntry,
     variant_toggler::{ToggleVariant, VariantToggler},
