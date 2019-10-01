@@ -1,5 +1,6 @@
 use core::num::NonZeroU8;
 
+/// Trait to enable dynamic resizing for a widget, based on another
 pub trait DynamicResize
 where
     Self: gtk::WidgetExt,

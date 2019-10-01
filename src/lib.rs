@@ -10,17 +10,11 @@ extern crate cascade;
 #[macro_use]
 extern crate shrinkwraprs;
 
-pub mod entries;
-pub mod widgets;
+mod functions;
+mod macros;
+mod traits;
+mod widgets_;
 
-mod dynamic_resize;
-mod keybindings;
-mod revealing_button;
-mod uuid_entry;
+pub use self::{functions::*, macros::*, traits::*, widgets_::*};
 
 pub use cascade::cascade;
-
-pub use self::{
-    dynamic_resize::DynamicResize, entries::EntriesExt, revealing_button::RevealingButton,
-    uuid_entry::UuidEntry,
-};

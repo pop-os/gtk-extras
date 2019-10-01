@@ -1,3 +1,5 @@
+//! Functions for interacting with widgets.
+
 use gtk::prelude::*;
 
 /// Fetches all immediate widgets which are entries in the given container.

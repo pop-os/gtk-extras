@@ -1,4 +1,4 @@
-use crate::entries::EntriesExt;
+use crate::EntriesExt;
 use gtk::prelude::*;
 use std::{cell::RefCell, rc::Rc};
 use uuid::Uuid;
