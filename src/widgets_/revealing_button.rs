@@ -8,7 +8,8 @@ use gtk::prelude::*;
 pub struct RevealingButton {
     #[shrinkwrap(main_field)]
     container: gtk::Container,
-    dropdown_image: gtk::Image,
+
+    _dropdown_image: gtk::Image,
 
     pub event_box: gtk::EventBox,
     pub revealer:  gtk::Revealer,
@@ -62,7 +63,7 @@ impl RevealingButton {
 
         Self {
             container: container.upcast::<gtk::Container>(),
-            dropdown_image,
+            _dropdown_image: dropdown_image,
             event_box,
             revealer,
         }
