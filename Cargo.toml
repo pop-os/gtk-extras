@@ -5,7 +5,7 @@ authors = ["Michael Aaron Murphy <mmstick@pm.me>"]
 edition = "2018"
 
 [dependencies]
-gtk = "0.7.0"
+gtk = { version = "0.7.0", features = ["v3_22"] }
 gio = "0.7.0"
 shrinkwraprs = "0.2.1"
 uuid = "0.7.4"
