@@ -17,6 +17,8 @@ impl ImageSelection {
         let event_cb = Rc::new(event_cb);
 
         let container = gtk::FlowBoxBuilder::new()
+            .can_focus(true)
+            .focus_on_click(false)
             .homogeneous(true)
             .selection_mode(gtk::SelectionMode::None)
             .build();
@@ -30,6 +32,7 @@ impl ImageSelection {
 
             let radio = cascade! {
                 radio: gtk::RadioButton::new();
+                ..set_can_focus(false);
                 ..set_halign(gtk::Align::Center);
                 ..join_group(last_radio.as_ref());
                 ..connect_property_active_notify(move |_| {
@@ -54,7 +57,21 @@ impl ImageSelection {
                 ..add(&radio);
             };
 
-            container.add(&widget);
+            let weak_radio = radio.downgrade();
+            let child = cascade! {
+                gtk::FlowBoxChild::new();
+                ..set_can_focus(true);
+                ..set_can_default(true);
+                ..set_focus_on_click(false);
+                ..add(&widget);
+                ..connect_activate(move |_| {
+                    if let Some(radio) = weak_radio.upgrade() {
+                        radio.set_active(true);
+                    }
+                });
+            };
+
+            container.add(&child);
 
             last_radio = Some(radio);
         }
