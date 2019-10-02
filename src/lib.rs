@@ -6,7 +6,8 @@
 
 #[macro_use]
 extern crate cascade;
-
+#[macro_use]
+extern crate log;
 #[macro_use]
 extern crate shrinkwraprs;
 

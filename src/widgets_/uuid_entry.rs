@@ -81,6 +81,7 @@ impl UuidEntry {
             *source = Some(gtk::timeout_add(timeout, move || {
                 if let Some(text) = entry.get_text() {
                     if text.parse::<Uuid>().is_err() {
+                        error!("{} is not a valid UUID", text);
                         entry.set_text("");
                     }
                 }
