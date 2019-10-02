@@ -18,3 +18,4 @@ mod widgets_;
 pub use self::{functions::*, macros::*, traits::*, widgets_::*};
 
 pub use cascade::cascade;
+pub use shrinkwraprs::Shrinkwrap;
