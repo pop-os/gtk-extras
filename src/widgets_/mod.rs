@@ -1,11 +1,13 @@
 mod image_selection;
 mod revealing_button;
+mod svg_image;
 mod uuid_entry;
 mod variant_toggler;
 
 pub use self::{
     image_selection::{ImageSelection, SelectionVariant},
     revealing_button::RevealingButton,
+    svg_image::SvgImage,
     uuid_entry::UuidEntry,
     variant_toggler::{ToggleVariant, VariantToggler},
 };
