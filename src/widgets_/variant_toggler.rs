@@ -75,7 +75,6 @@ impl Deref for VariantToggler {
 impl Into<gtk::Container> for VariantToggler {
     fn into(self) -> gtk::Container { self.container }
 }
-
 /// A variant for the `VariantToggler` widget.
 pub struct ToggleVariant<'a, T> {
     pub name:        &'a str,

@@ -1,3 +1,4 @@
+use crate::SvgImage;
 use gtk::prelude::*;
 use std::rc::Rc;
 
@@ -46,13 +47,20 @@ impl ImageSelection {
 
             let image_path = variant.image.unwrap_or(placeholder);
 
+            let image = if image_path.ends_with(".svg") {
+                let widget: gtk::DrawingArea = SvgImage::from_file(image_path).unwrap().into();
+                widget.upcast::<gtk::Widget>()
+            } else {
+                gtk::ImageBuilder::new().file(image_path).build().upcast::<gtk::Widget>()
+            };
+
+            if let Some((width, height)) = variant.size_request {
+                image.set_size_request(width, height);
+            };
+
             let widget = cascade! {
                 gtk::Box::new(gtk::Orientation::Vertical, 12);
-                ..add(
-                    &gtk::ImageBuilder::new()
-                        .file(image_path)
-                        .build()
-                );
+                ..add(&image);
                 ..add(&gtk::LabelBuilder::new().label(variant.name).xalign(0.0).halign(gtk::Align::Center).build());
                 ..add(&radio);
             };
@@ -85,8 +93,9 @@ impl ImageSelection {
 }
 
 pub struct SelectionVariant<'a, T> {
-    pub name:   &'a str,
-    pub image:  Option<&'a str>,
-    pub active: bool,
-    pub event:  T,
+    pub name:         &'a str,
+    pub image:        Option<&'a str>,
+    pub size_request: Option<(i32, i32)>,
+    pub active:       bool,
+    pub event:        T,
 }
