@@ -1,6 +1,6 @@
 use crate::SvgImage;
 use gtk::prelude::*;
-use std::rc::Rc;
+use std::{collections::HashMap, rc::Rc};
 
 /// A list of selections based on radio buttons, with optional images.
 #[derive(Shrinkwrap)]
@@ -26,6 +26,7 @@ impl ImageSelection {
 
         let mut last_radio = None::<gtk::RadioButton>;
         let mut active_radio = None::<gtk::RadioButton>;
+        let mut row_association = HashMap::new();
 
         for variant in variants {
             let event = variant.event;
@@ -65,21 +66,14 @@ impl ImageSelection {
                 ..add(&radio);
             };
 
-            let weak_radio = radio.downgrade();
             let child = cascade! {
                 gtk::FlowBoxChild::new();
-                ..set_can_focus(true);
-                ..set_can_default(true);
-                ..set_focus_on_click(false);
                 ..add(&widget);
-                ..connect_activate(move |_| {
-                    if let Some(radio) = weak_radio.upgrade() {
-                        radio.set_active(true);
-                    }
-                });
             };
 
             container.add(&child);
+
+            row_association.insert(child, radio.clone());
 
             last_radio = Some(radio);
         }
@@ -87,6 +81,12 @@ impl ImageSelection {
         if let Some(radio) = active_radio {
             radio.set_active(true);
         }
+
+        container.connect_child_activated(move |_, child| {
+            if let Some(radio) = row_association.get(child) {
+                radio.set_active(true);
+            }
+        });
 
         Self { container }
     }
