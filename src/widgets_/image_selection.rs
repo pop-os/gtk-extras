@@ -1,4 +1,3 @@
-use crate::SvgImage;
 use gtk::prelude::*;
 use std::{collections::HashMap, rc::Rc};
 
@@ -47,13 +46,8 @@ impl ImageSelection {
             }
 
             let image_path = variant.image.unwrap_or(placeholder);
-
-            let image = if image_path.ends_with(".svg") {
-                let widget: gtk::DrawingArea = SvgImage::from_file(image_path).unwrap().into();
-                widget.upcast::<gtk::Widget>()
-            } else {
-                gtk::ImageBuilder::new().file(image_path).build().upcast::<gtk::Widget>()
-            };
+                
+            let image = gtk::ImageBuilder::new().file(image_path).build().upcast::<gtk::Widget>();
 
             if let Some((width, height)) = variant.size_request {
                 image.set_size_request(width, height);
