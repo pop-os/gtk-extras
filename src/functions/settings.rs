@@ -14,7 +14,7 @@ const SCHEMA_PATH: &str = "/usr/share/glib-2.0/schemas/";
 ///
 /// ```
 /// use gtk_extras::settings;
-///  
+///
 /// let schema = "org.freedesktop.Tracker";
 /// let buf = &mut String::with_capacity(64);
 /// if let Some(settings) = settings::new_checked_with_buffer(buf, schema) {
@@ -78,7 +78,10 @@ impl GeditPreferencesEditor {
     pub fn scheme(&self) -> Option<GString> { self.0.get_string("scheme") }
 
     /// Set the active scheme
-    pub fn set_scheme(&self, scheme: &str) { self.0.set_string("scheme", scheme); }
+    pub fn set_scheme(&self, scheme: &str) {
+        self.0.set_string("scheme", scheme);
+        Settings::sync();
+    }
 }
 
 /// Convenience type for `org.gnome.desktop.interface`
@@ -91,5 +94,8 @@ impl GnomeDesktopInterface {
     pub fn gtk_theme(&self) -> Option<GString> { self.0.get_string("gtk-theme") }
 
     /// Set the active GTK theme
-    pub fn set_gtk_theme(&self, theme: &str) { self.0.set_string("gtk-theme", theme); }
+    pub fn set_gtk_theme(&self, theme: &str) {
+        self.0.set_string("gtk-theme", theme);
+        Settings::sync();
+    }
 }
