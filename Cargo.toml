@@ -1,17 +1,18 @@
 [package]
 name = "gtk-extras"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Michael Aaron Murphy <mmstick@pm.me>"]
 edition = "2018"
 
 [dependencies]
-gtk = { version = "0.7", features = ["v3_22"] }
-gio = "0.7"
-shrinkwraprs = "0.2"
-uuid = "0.8"
-glib = "0.8"
-itertools = "0.8"
 cascade = "0.1"
-gdk = "0.11"
+derive_more = "0.99"
+gdk = "0.12"
+gio = "0.8"
+glib = "0.9"
+gtk = { version = "0.8", features = ["v3_22"] }
+itertools = "0.8"
 log = "0.4"
-resvg = { version = "0.8", features = ["cairo-backend"] }
+# resvg = { version = "0.8", features = ["cairo-backend"] }
+resvg = { git = "https://github.com/mmstick/resvg", features = ["cairo-backend"], branch = "cairo-update" }
+uuid = "0.8"

@@ -5,7 +5,9 @@ use std::path::Path;
 /// Renders SVG images into a GTK DrawingArea via resvg
 ///
 /// [resvg]: https://github.com/RazrFalcon/resvg
-#[derive(Shrinkwrap)]
+#[derive(AsRef, Deref)]
+#[as_ref]
+#[deref]
 pub struct SvgImage(gtk::DrawingArea);
 
 impl SvgImage {

@@ -2,9 +2,10 @@ use gtk::prelude::*;
 use std::{collections::HashMap, rc::Rc};
 
 /// A list of selections based on radio buttons, with optional images.
-#[derive(Shrinkwrap)]
+#[derive(AsRef, Deref)]
 pub struct ImageSelection {
-    #[shrinkwrap(main_field)]
+    #[as_ref]
+    #[deref]
     container: gtk::FlowBox,
 }
 

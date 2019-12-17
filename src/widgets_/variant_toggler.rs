@@ -1,8 +1,11 @@
 use gtk::prelude::*;
-use std::{ops::Deref, rc::Rc};
+use std::rc::Rc;
 
 /// A list box containing a collection of toggleable variants.
+#[derive(AsRef, Deref)]
 pub struct VariantToggler {
+    #[as_ref]
+    #[deref]
     container: gtk::Container,
 }
 
@@ -64,12 +67,6 @@ impl VariantToggler {
 
         Self { container: container.upcast::<gtk::Container>() }
     }
-}
-
-impl Deref for VariantToggler {
-    type Target = gtk::Container;
-
-    fn deref(&self) -> &Self::Target { &self.container }
 }
 
 impl Into<gtk::Container> for VariantToggler {

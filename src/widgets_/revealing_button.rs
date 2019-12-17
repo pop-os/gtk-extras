@@ -4,9 +4,10 @@ use gtk::prelude::*;
 ///
 /// The primary widget is displayed at all times, whereas the child widget is generated
 /// on the first reveal.
-#[derive(Shrinkwrap)]
+#[derive(AsRef, Deref)]
 pub struct RevealingButton {
-    #[shrinkwrap(main_field)]
+    #[as_ref]
+    #[deref]
     container: gtk::Container,
 
     _dropdown_image: gtk::Image,

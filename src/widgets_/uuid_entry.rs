@@ -56,7 +56,9 @@ use uuid::Uuid;
 ///     glib::Continue(true)
 /// });
 /// ```
-#[derive(Shrinkwrap)]
+#[derive(AsRef, Deref)]
+#[as_ref]
+#[deref]
 pub struct UuidEntry(gtk::Entry);
 
 impl UuidEntry {
@@ -87,7 +89,7 @@ impl UuidEntry {
                 }
 
                 *source_.borrow_mut() = None;
-                gtk::Continue(false)
+                glib::Continue(false)
             }));
         });
 

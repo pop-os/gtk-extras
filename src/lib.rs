@@ -7,9 +7,9 @@
 #[macro_use]
 extern crate cascade;
 #[macro_use]
-extern crate log;
+extern crate derive_more;
 #[macro_use]
-extern crate shrinkwraprs;
+extern crate log;
 
 mod functions;
 mod macros;
@@ -19,4 +19,3 @@ mod widgets_;
 pub use self::{functions::*, macros::*, traits::*, widgets_::*};
 
 pub use cascade::cascade;
-pub use shrinkwraprs::Shrinkwrap;
