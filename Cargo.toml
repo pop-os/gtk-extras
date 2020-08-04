@@ -14,5 +14,9 @@ glib = "0.9"
 gtk = { version = "0.8", features = ["v3_22"] }
 itertools = "0.8"
 log = "0.4"
-librsvg = { git = "https://gitlab.gnome.org/GNOME/librsvg", tag = "2.49.3" }
+librsvg = { git = "https://gitlab.gnome.org/GNOME/librsvg", tag = "2.49.3", optional = true }
 uuid = "0.8"
+
+[features]
+default = ["svg"]
+svg = ["librsvg"]
