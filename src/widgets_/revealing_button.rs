@@ -101,7 +101,7 @@ impl RevealingButton {
     /// If the button has already generated a child widget, destroy it.
     pub fn destroy_revealed(&self) {
         if let Some(child) = self.revealer.get_child() {
-            child.destroy();
+            unsafe { child.destroy() }
         }
     }
 }

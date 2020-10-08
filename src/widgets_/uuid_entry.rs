@@ -80,12 +80,11 @@ impl UuidEntry {
                 glib::source_remove(source);
             }
 
-            *source = Some(gtk::timeout_add(timeout, move || {
-                if let Some(text) = entry.get_text() {
-                    if text.parse::<Uuid>().is_err() {
-                        error!("{} is not a valid UUID", text);
-                        entry.set_text("");
-                    }
+            *source = Some(glib::timeout_add_local(timeout, move || {
+                let text = entry.get_text();
+                if text.parse::<Uuid>().is_err() {
+                    error!("{} is not a valid UUID", text);
+                    entry.set_text("");
                 }
 
                 *source_.borrow_mut() = None;
@@ -102,9 +101,8 @@ impl UuidEntry {
 
     /// Fetches the UUID, and clears the contents of the entry.
     pub fn get_uuid(&self) -> Option<Uuid> {
-        self.get_text().and_then(|text| {
-            self.set_text("");
-            text.parse::<Uuid>().ok()
-        })
+        let text = self.get_text();
+        self.set_text("");
+        text.parse::<Uuid>().ok()
     }
 }

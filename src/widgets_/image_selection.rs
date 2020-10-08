@@ -12,7 +12,7 @@ pub struct ImageSelection {
 impl ImageSelection {
     pub fn new<T: Copy + 'static>(
         variants: &[SelectionVariant<T>],
-        placeholder: &str,
+        placeholder: ImageSrc,
         event_cb: impl Fn(T) + 'static,
     ) -> Self {
         let event_cb = Rc::new(event_cb);
@@ -33,7 +33,7 @@ impl ImageSelection {
             let event_cb_ = event_cb.clone();
 
             let radio = cascade! {
-                radio: gtk::RadioButton::new();
+                gtk::RadioButton::new();
                 ..set_can_focus(false);
                 ..set_halign(gtk::Align::Center);
                 ..join_group(last_radio.as_ref());
@@ -47,8 +47,15 @@ impl ImageSelection {
             }
 
             let image_path = variant.image.unwrap_or(placeholder);
-                
-            let image = gtk::ImageBuilder::new().file(image_path).build().upcast::<gtk::Widget>();
+
+            let mut ib = gtk::ImageBuilder::new();
+
+            match image_path {
+                ImageSrc::File(path) => ib = ib.file(path),
+                ImageSrc::Resource(res) => ib = ib.resource(res)
+            }
+
+            let image = ib.build().upcast::<gtk::Widget>();
 
             if let Some((width, height)) = variant.size_request {
                 image.set_size_request(width, height);
@@ -87,9 +94,15 @@ impl ImageSelection {
     }
 }
 
+#[derive(Clone, Copy)]
+pub enum ImageSrc<'a> {
+    File(&'a str),
+    Resource(&'a str)
+}
+
 pub struct SelectionVariant<'a, T> {
     pub name:         &'a str,
-    pub image:        Option<&'a str>,
+    pub image:        Option<ImageSrc<'a>>,
     pub size_request: Option<(i32, i32)>,
     pub active:       bool,
     pub event:        T,

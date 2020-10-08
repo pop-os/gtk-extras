@@ -49,7 +49,7 @@ pub fn new_checked_with_buffer(buffer: &mut String, schema: &str) -> Option<Sett
 /// use gtk_extras::settings;
 ///
 /// let schema = "org.gnome.nautilus";
-/// let buf = &mut String::with_capacity(64)
+/// let buf = &mut String::with_capacity(64);
 /// if settings::schema_exists_with_buffer(buf, schema) {
 ///     println!("settings for {} exists", schema);
 /// }
@@ -83,7 +83,7 @@ impl GeditPreferencesEditor {
 
     /// Set the active scheme
     pub fn set_scheme(&self, scheme: &str) {
-        self.0.set_string("scheme", scheme);
+        let _ = self.0.set_string("scheme", scheme);
         Settings::sync();
     }
 }
@@ -103,7 +103,7 @@ impl GnomeDesktopInterface {
 
     /// Set the active GTK theme
     pub fn set_gtk_theme(&self, theme: &str) {
-        self.0.set_string("gtk-theme", theme);
+        let _ = self.0.set_string("gtk-theme", theme);
         Settings::sync();
     }
 }

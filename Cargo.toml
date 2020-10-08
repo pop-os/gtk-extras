@@ -1,22 +1,17 @@
 [package]
 name = "gtk-extras"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Michael Aaron Murphy <mmstick@pm.me>"]
 edition = "2018"
 
 [dependencies]
-cascade = "0.1"
-cairo-rs = "0.8"
+cascade = "1.0"
+cairo-rs = "0.9"
 derive_more = "0.99"
-gdk = "0.12"
-gio = "0.8"
-glib = "0.9"
-gtk = { version = "0.8", features = ["v3_22"] }
-itertools = "0.8"
+gdk = "0.13"
+gio = "0.9"
+glib = "0.10"
+gtk = { version = "0.9", features = ["v3_22"] }
+itertools = "0.9"
 log = "0.4"
-librsvg = { git = "https://gitlab.gnome.org/GNOME/librsvg", tag = "2.49.3", optional = true }
 uuid = "0.8"
-
-[features]
-default = ["svg"]
-svg = ["librsvg"]
