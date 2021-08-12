@@ -1,6 +1,6 @@
 use crate::EntriesExt;
 use gtk::prelude::*;
-use std::{cell::RefCell, rc::Rc};
+use std::{cell::RefCell, rc::Rc, time::Duration};
 use uuid::Uuid;
 
 /// Variant of an Entry for handling UUID inputs
@@ -80,8 +80,8 @@ impl UuidEntry {
                 glib::source_remove(source);
             }
 
-            *source = Some(glib::timeout_add_local(timeout, move || {
-                let text = entry.get_text();
+            *source = Some(glib::timeout_add_local(Duration::from_millis(timeout.into()), move || {
+                let text = entry.text();
                 if text.parse::<Uuid>().is_err() {
                     error!("{} is not a valid UUID", text);
                     entry.set_text("");
@@ -101,7 +101,7 @@ impl UuidEntry {
 
     /// Fetches the UUID, and clears the contents of the entry.
     pub fn get_uuid(&self) -> Option<Uuid> {
-        let text = self.get_text();
+        let text = self.text();
         self.set_text("");
         text.parse::<Uuid>().ok()
     }

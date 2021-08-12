@@ -37,7 +37,7 @@ impl ImageSelection {
                 ..set_can_focus(false);
                 ..set_halign(gtk::Align::Center);
                 ..join_group(last_radio.as_ref());
-                ..connect_property_active_notify(move |_| {
+                ..connect_active_notify(move |_| {
                     event_cb_(event);
                 });
             };

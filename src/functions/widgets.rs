@@ -6,5 +6,5 @@ use gtk::prelude::*;
 pub fn iter_from<T: IsA<gtk::Widget>, C: IsA<gtk::Container>>(
     container: &C,
 ) -> impl DoubleEndedIterator<Item = T> {
-    container.get_children().into_iter().filter_map(|w| w.downcast::<T>().ok())
+    container.children().into_iter().filter_map(|w| w.downcast::<T>().ok())
 }

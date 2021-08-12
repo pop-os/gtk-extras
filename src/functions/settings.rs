@@ -1,7 +1,8 @@
 //! Convenience types for interacting with common GSettings parameters.
 
-use gio::{Settings, SettingsExt};
+use gio::Settings;
 use glib::GString;
+use gdk::prelude::*;
 use std::path::Path;
 
 const SCHEMA_PATH: &str = "/usr/share/glib-2.0/schemas/";
@@ -79,7 +80,7 @@ impl GeditPreferencesEditor {
     }
 
     /// Get the active scheme
-    pub fn scheme(&self) -> Option<GString> { self.0.get_string("scheme") }
+    pub fn scheme(&self) -> GString { self.0.string("scheme") }
 
     /// Set the active scheme
     pub fn set_scheme(&self, scheme: &str) {
@@ -99,7 +100,7 @@ impl GnomeDesktopInterface {
     }
 
     /// Get the active GTK theme
-    pub fn gtk_theme(&self) -> Option<GString> { self.0.get_string("gtk-theme") }
+    pub fn gtk_theme(&self) -> GString { self.0.string("gtk-theme") }
 
     /// Set the active GTK theme
     pub fn set_gtk_theme(&self, theme: &str) {

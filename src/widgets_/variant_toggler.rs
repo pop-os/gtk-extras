@@ -30,7 +30,7 @@ impl VariantToggler {
             let event = variant.event;
             let event_cb_ = event_cb.clone();
             switch.connect_changed_active(move |switch| {
-                event_cb_(event, switch.get_active());
+                event_cb_(event, switch.is_active());
             });
 
             let switch = switch.upcast::<gtk::Widget>();
@@ -46,7 +46,7 @@ impl VariantToggler {
             let desc_label =
                 gtk::LabelBuilder::new().xalign(0.0).label(variant.description).build();
 
-            desc_label.get_style_context().add_class(&gtk::STYLE_CLASS_DIM_LABEL);
+            desc_label.style_context().add_class(&gtk::STYLE_CLASS_DIM_LABEL);
 
             let variant_container = gtk::GridBuilder::new()
                 .row_spacing(2)

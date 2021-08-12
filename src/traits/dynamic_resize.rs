@@ -1,16 +1,17 @@
 use core::num::NonZeroU8;
+use gtk::prelude::*;
 
 /// Trait to enable dynamic resizing for a widget, based on another
 pub trait DynamicResize
 where
-    Self: gtk::WidgetExt,
+    Self: WidgetExt,
 {
     /// When this widget is resized, the `other` widget will also be resized to the given width and
     /// height percent (1-100);
     ///
     /// This is most useful for dynamically resizing the child of a container to be a certain % of
     /// the parent's dimensions.
-    fn dynamic_resize<W: gtk::WidgetExt + 'static>(
+    fn dynamic_resize<W: WidgetExt + 'static>(
         &self,
         other: W,
         width_percent: Option<NonZeroU8>,
@@ -28,4 +29,4 @@ fn calc_side(measurement: i32, percent: NonZeroU8) -> i32 {
     measurement * i32::from(percent.get()) / 100
 }
 
-impl<T: gtk::WidgetExt> DynamicResize for T {}
+impl<T: WidgetExt> DynamicResize for T {}
