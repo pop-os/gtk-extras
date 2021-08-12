@@ -31,11 +31,11 @@ impl RevealingButton {
         let dropdown_image_ = dropdown_image.downgrade();
         let revealer = cascade! {
             gtk::Revealer::new();
-            ..connect_property_reveal_child_notify(move |revealer| {
+            ..connect_reveal_child_notify(move |revealer| {
                 dropdown_image_.upgrade()
                     .expect("dropdown image did not exist")
                     .set_from_icon_name(
-                        Some(if revealer.get_reveal_child() {
+                        Some(if revealer.reveals_child() {
                             "pan-down-symbolic"
                         } else {
                             "pan-end-symbolic"
@@ -81,10 +81,10 @@ impl RevealingButton {
 
     /// Reveals an inner child, and generates it if it is missing.
     pub fn reveal<F: FnMut() -> gtk::Widget>(&self, mut func: F) -> bool {
-        let reveal = if self.revealer.get_reveal_child() {
+        let reveal = if self.revealer.reveals_child() {
             false
         } else {
-            if self.revealer.get_child().is_none() {
+            if self.revealer.child().is_none() {
                 self.revealer.add(&func());
             }
 
@@ -100,7 +100,7 @@ impl RevealingButton {
 
     /// If the button has already generated a child widget, destroy it.
     pub fn destroy_revealed(&self) {
-        if let Some(child) = self.revealer.get_child() {
+        if let Some(child) = self.revealer.child() {
             unsafe { child.destroy() }
         }
     }
