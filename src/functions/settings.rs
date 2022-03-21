@@ -1,11 +1,8 @@
 //! Convenience types for interacting with common GSettings parameters.
 
-use gio::Settings;
+use gio::{Settings, SettingsSchemaSource};
 use glib::GString;
 use gdk::prelude::*;
-use std::path::Path;
-
-const SCHEMA_PATH: &str = "/usr/share/glib-2.0/schemas/";
 
 /// Checks if a schema exists before attempting to create a `Settings` for it
 ///
@@ -23,12 +20,7 @@ const SCHEMA_PATH: &str = "/usr/share/glib-2.0/schemas/";
 /// }
 /// ```
 pub fn new_checked(schema: &str) -> Option<Settings> {
-    new_checked_with_buffer(&mut String::with_capacity(64), schema)
-}
-
-/// Uses a pre-allocated buffer for constructing the schema path.
-pub fn new_checked_with_buffer(buffer: &mut String, schema: &str) -> Option<Settings> {
-    if schema_exists_with_buffer(buffer, schema) {
+    if schema_exists(schema) {
         Some(Settings::new(schema))
     } else {
         None
@@ -56,17 +48,10 @@ pub fn new_checked_with_buffer(buffer: &mut String, schema: &str) -> Option<Sett
 /// }
 /// ```
 pub fn schema_exists(schema: &str) -> bool {
-    schema_exists_with_buffer(&mut String::with_capacity(64), schema)
-}
-
-/// Uses a pre-allocated buffer for constructing the schema path.
-pub fn schema_exists_with_buffer(buffer: &mut String, schema: &str) -> bool {
-    buffer.clear();
-    buffer.push_str(SCHEMA_PATH);
-    buffer.push_str(schema);
-    buffer.push_str(".gschema.xml");
-
-    Path::new(buffer.as_str()).exists()
+    match SettingsSchemaSource::default() {
+        Some(source) => source.lookup(schema, true).is_some(),
+        None => false,
+    }
 }
 
 /// Convenience type for `org.gnome.gedit.preferences.editor`
@@ -99,12 +84,41 @@ impl GnomeDesktopInterface {
         new_checked("org.gnome.desktop.interface").map(Self)
     }
 
+    /// Get the active color scheme
+    pub fn color_scheme(&self) -> GString { self.0.string("color-scheme") }
+
+    /// Set the active color scheme
+    pub fn set_color_scheme(&self, theme: &str) {
+        let _ = self.0.set_string("color-scheme", theme);
+        Settings::sync();
+    }
+
     /// Get the active GTK theme
     pub fn gtk_theme(&self) -> GString { self.0.string("gtk-theme") }
 
     /// Set the active GTK theme
     pub fn set_gtk_theme(&self, theme: &str) {
         let _ = self.0.set_string("gtk-theme", theme);
+        Settings::sync();
+    }
+}
+
+/// Convenience type for `org.gnome.meld`
+pub struct MeldPreferencesEditor(pub Settings);
+
+impl MeldPreferencesEditor {
+    pub fn new() -> Self { Self(Settings::new("org.gnome.meld")) }
+
+    pub fn new_checked() -> Option<Self> {
+        new_checked("org.gnome.meld").map(Self)
+    }
+
+    /// Get the active scheme
+    pub fn style_scheme(&self) -> GString { self.0.string("style-scheme") }
+
+    /// Set the active scheme
+    pub fn set_style_scheme(&self, scheme: &str) {
+        let _ = self.0.set_string("style-scheme", scheme);
         Settings::sync();
     }
 }
